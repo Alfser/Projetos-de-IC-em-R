@@ -1,4 +1,6 @@
 #learning exemple neural network in R
+#this is so easy, it is'nt?
+
 
 install.packages("neuralnet")
 library(neuralnet)
