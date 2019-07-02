@@ -10,6 +10,7 @@ library('neuralnet')
 
 table = read.table('set_of_train_and_test.csv', header = T, sep = ';', stringsAsFactors = F)
 #shuffleing lines to get more mixed
+set.seed(55)
 shuffle_table = table[sample(nrow(table)),]
 
 #geting set o train end test shuffled
@@ -25,12 +26,12 @@ names = names(table)
 #creating formula to put it into neurauralnet function 
 f = as.formula(paste(paste(names[9:13], collapse = '+'), '~',paste(names[1:8], collapse = '+')))
 
-nn = neuralnet(formula = f, data = train, hidden = c(5,5), act.fct = 'logistic', linear.output = F)
+nn = neuralnet(formula = f, data = train, hidden = c(10), act.fct = 'logistic', linear.output = F)
 
 #seeing error
 nn$result.matrix[1:3, ]
 
-plot(nn)
+#plot(nn)
 
 #making test
 r = compute(nn, test[1:8])
@@ -39,14 +40,14 @@ r = compute(nn, test[1:8])
 a = data.frame(rede = max.col(r$net.result))
 prob = r$net.result
 
-a$test = max.col(test[, 9:11])
+a$test = max.col(test[, 9:13])
 a$erro = (abs(a$rede - a$test))
 qtd = sum(a$erro != 0)
 percent = (qtd/nrow(test))*100
 print(paste('error perrcente : ', percent, '%'))
 
-plot(a$test, col = 'green', pch = 20, ylim = c(0.5,4.5))
+plot(a$test, col = 'green', pch = 20, ylim = c(0.5,4.5), ylab = 'Classes', xlab = 'Exemplos')
 par(new = T)
-plot(a$rede, col = 'red', ylim = c(0.5, 4.5))
+plot(a$rede, col = 'red', ylim = c(0.5, 4.5), ylab = '', xlab = '')
 
 
