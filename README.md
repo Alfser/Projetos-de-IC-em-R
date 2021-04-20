@@ -1,2 +1,2 @@
 # Projetos-de-IC-em-R
-Working computer engeer Artificial Inteligence
+Works Artificial Inteligence subject from Computer Engeer course 
